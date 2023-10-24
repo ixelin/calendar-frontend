@@ -1,6 +1,6 @@
 import React from "react";
 import cx from 'classnames';
-import { TCalendarEvent } from "../../types/CalendarEvent";
+import { TCalendarEvent } from "../../../../types/CalendarEvent";
 import "./CalendarEvent.scss";
 interface CalendarEventProps {
   event: TCalendarEvent;

@@ -1,0 +1,63 @@
+// Variables
+$primary-color: #2c3e50;
+$secondary-color: #ecf0f1;
+$button-color: #e74c3c;
+$button-hover-color: #c0392b;
+$button-padding: 5px 15px;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: $primary-color;
+  color: $secondary-color;
+}
+
+.logo-section {
+  flex: 1;
+  .home-logo {
+    max-width: 90px;
+    cursor: pointer;
+  }
+}
+
+.nav-section {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .add-btn,
+  .remove-btn {
+    font-size: 25px;
+    margin: 0 20px;
+    padding: $button-padding;
+    cursor: pointer;
+    color: $secondary-color;
+    transition: 0.3s;
+    &:hover {
+      color: $button-hover-color;
+    }
+  }
+  .add-btn:hover {
+    color: #2bde25;
+  }
+}
+
+.login-section {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+
+  .login-btn {
+    font-size: 25px;
+    padding: $button-padding;
+    cursor: pointer;
+    color: $secondary-color;
+    transition: 0.3s;
+    text-decoration: none;
+    &:hover {
+      color: #29a0e6;
+    }
+  }
+}

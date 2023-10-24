@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import "./Calendar.scss";
-import CalendarEvent from "../CalendarEvent";
-import { TCalendarEvent } from "../../types/CalendarEvent";
+import CalendarEvent from "./CalendarEvent";
+import { TCalendarEvent } from "../../../types/CalendarEvent";
 const timeLabels = [
   "8:00",
   "8:30",
@@ -36,6 +36,11 @@ const events: TCalendarEvent[] = [
 ];
 
 const Calendar = () => {
+
+  const list = useMemo( ()=> {
+    return events;
+  }, [events]);
+
   return (
     <div className="calendar">
       <div className="time-slots">
@@ -47,7 +52,7 @@ const Calendar = () => {
       </div>
 
       <div className="events">
-        {events.map((event, index) => (
+        {list.map((event, index) => (
           <CalendarEvent event={event} key={index}/>
         ))}
       </div>
