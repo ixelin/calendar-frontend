@@ -4,7 +4,9 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styles from "./Login.module.scss";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
+import { useAppDispatch, useAppSelector} from "../../app/hooks";
+import { setUser } from "../../features/user/userSlice";
 
 interface LoginForm {
   username: string;
@@ -23,7 +25,10 @@ const schema = yup.object().shape({
     .required("Password is required"),
 });
 const Login = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const {user} = useAppSelector(state => state.user)
+
   function handleRegister() {
     navigate("/register");
   }
@@ -36,9 +41,11 @@ const Login = () => {
   });
 
   const onSubmit = (data: LoginForm) => {
-    console.log(data);
+    dispatch(setUser({ ...data, calendar: 0, id:0 }));
   };
-
+  if (user) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className={styles.loginContainer}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>

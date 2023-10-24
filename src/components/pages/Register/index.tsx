@@ -4,7 +4,9 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styles from "./Register.module.scss";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { setUser } from "../../features/user/userSlice";
 
 interface RegisterForm {
   username: string;
@@ -24,6 +26,8 @@ const schema = yup.object().shape({
 });
 const Register = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
+  const {user} = useAppSelector(state => state.user)
   function handleLogin() {
     navigate("/login");
   }
@@ -36,9 +40,11 @@ const Register = () => {
   });
 
   const onSubmit = (data: RegisterForm) => {
-    console.log(data);
+    dispatch(setUser({ ...data, calendar: 0, id:0 }));
   };
-
+  if (user) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className={styles.loginContainer}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>

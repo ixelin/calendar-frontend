@@ -1,7 +1,8 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import "./Calendar.scss";
 import CalendarEvent from "./CalendarEvent";
-import { TCalendarEvent } from "../../../types/CalendarEvent";
+import { useAppSelector } from "../../app/hooks";
+import { checkOverlaps } from "../../helpers/checkOverlaps";
 const timeLabels = [
   "8:00",
   "8:30",
@@ -23,23 +24,14 @@ const timeLabels = [
   "4:30",
   "5:00",
 ];
-const events: TCalendarEvent[] = [
-  { start: 0, duration: 15, title: "Exercise", id: 1 },
-  { start: 25, duration: 30, title: "Travel to work", id: 2 },
-  { start: 30, duration: 30, title: "Plan day", id: 3 },
-  { start: 60, duration: 15, title: "Review yesterday's commits", id: 4 },
-  { start: 100, duration: 15, title: "Code review", id: 5 },
-  { start: 180, duration: 90, title: "Have lunch with John", id: 6 },
-  { start: 360, duration: 30, title: "Skype call", id: 7 },
-  { start: 370, duration: 45, title: "Follow up with designer", id: 8 },
-  { start: 405, duration: 30, title: "Push up branch", id: 9 },
-];
-
 const Calendar = () => {
-  const list = useMemo(() => {
-    return events;
-  }, [events]);
+  const { calendar } = useAppSelector((state) => state.calendar);
 
+
+  const list = useMemo(() => {
+    return checkOverlaps(calendar);
+  }, [calendar]);
+  
   return (
     <div className="calendar">
       <div className="time-slots">
