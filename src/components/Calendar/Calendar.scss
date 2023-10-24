@@ -1,0 +1,38 @@
+.calendar {
+  position: relative;
+  margin: 20px auto;
+  height: 150vh;
+  width: 270px; //? 200px of event width + 70 from the left
+  .time-slots {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    
+    .time-slot {
+      display: block;
+      height: 5.56%; 
+      width: 100%;
+      padding-left: 5px;
+      color: rgb(161, 161, 161);
+      border-top: 2px solid lightgray;
+      font-size: 16px;
+      font-weight: 200;
+      box-sizing: border-box;
+      &.half-hour {
+        border-top: none;
+        font-size: 12px;
+      }
+    }
+  }
+  
+  .events {
+    display: grid;
+    grid-template-rows: repeat(540, 1fr);  //! 540 slots of 1 minute each
+    position: absolute;
+    top: 0;
+    left: 70px;
+    height: 100%;
+    width: 200px;
+}
+
+}

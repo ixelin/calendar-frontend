@@ -1,0 +1,11 @@
+$event-bg-color: #e2ecf5;
+$event-border-color: #6e9ecf;
+
+.event {
+  width: 100%;
+  background-color: $event-bg-color;
+  border-left: 3px solid $event-border-color;
+  font-size: 14px;
+  padding: 5px;
+  box-sizing: border-box;
+}
