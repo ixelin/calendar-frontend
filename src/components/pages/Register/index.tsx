@@ -3,10 +3,10 @@ import { useForm, Controller } from "react-hook-form";
 // @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import styles from "./Login.module.scss";
+import styles from "./Register.module.scss";
 import { useNavigate } from "react-router";
 
-interface LoginForm {
+interface RegisterForm {
   username: string;
   password: string;
 }
@@ -22,20 +22,20 @@ const schema = yup.object().shape({
     .min(8, "Password must be at least 8 characters long")
     .required("Password is required"),
 });
-const Login = () => {
+const Register = () => {
   const navigate = useNavigate();
-  function handleRegister() {
-    navigate("/register");
+  function handleLogin() {
+    navigate("/login");
   }
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<LoginForm>({
+  } = useForm<RegisterForm>({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: LoginForm) => {
+  const onSubmit = (data: RegisterForm) => {
     console.log(data);
   };
 
@@ -81,13 +81,13 @@ const Login = () => {
             <div className={styles.error}>{errors.password.message}</div>
           )}
         </label>
-        <button type="submit">Login</button>
-        <p className={styles.registerLink} onClick={handleRegister}>
-          Don't have an account? Sign Up
+        <button type="submit">Register</button>
+        <p className={styles.loginLink} onClick={handleLogin}>
+          Already have an account? Sign In
         </p>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

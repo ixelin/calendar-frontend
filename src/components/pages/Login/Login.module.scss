@@ -1,0 +1,81 @@
+$dark-primary: #afb2b7;
+$secondary: #4b5d6b;
+$input-bg: #40444b;
+$input-color: #ffffff;
+$btn-bg: #7289da;
+$btn-hover: #5865f2;
+$error-color: #f04747;
+
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background-color: $dark-primary;
+}
+
+.loginForm {
+  max-width: 500px;
+  width: 100%;
+  padding: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 20px;
+
+    & > span {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: $input-bg;
+      color: $input-color;
+      transition: background-color 0.2s;
+
+      &:focus {
+        outline: none;
+        background-color: darken($input-bg, 5%);
+      }
+    }
+
+    .error {
+      margin-top: 5px;
+      color: $error-color;
+      font-size: 0.8em;
+    }
+  }
+
+  button {
+    width: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: $btn-bg;
+    color: $input-color;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin: 0 auto;
+    display: block;
+    &:hover {
+      background-color: $btn-hover;
+    }
+  }
+}
+
+.registerLink {
+  width: fit-content;
+  margin: 20px auto;
+  font-size: 1em;
+  text-align: center;
+  color: $input-color;
+  cursor: pointer;
+  transition: 0.2s;
+  &:hover {
+    font-size: 1.05em;
+  }
+}
