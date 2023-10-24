@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { createCalendarEvent } from "../../features/Calendar/calendarSlice";
-import { Navigate } from "react-router";
 
 type AddModalProps = {
   isOpen: boolean;

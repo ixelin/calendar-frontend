@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import NotFoundPage from "./components/pages/NotFoundPage";
+import SelectEvent from "./components/pages/SelectEvent";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/" element={<Calendar />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/:id" element={<SelectEvent />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

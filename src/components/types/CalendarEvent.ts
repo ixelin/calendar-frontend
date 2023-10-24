@@ -4,5 +4,4 @@ export type TCalendarEvent = {
   title: string;
   userId: number;
   id: number;
-  overlaps?:boolean
 };
