@@ -3,16 +3,25 @@ import "./Header.scss"; // Importing styles
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { setUser } from "../features/user/userSlice";
+import AddModal from "./AddModal";
 
 const Header = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const [isMenuVisible, setMenuVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
   const handleLogout = () => {
-    dispatch(setUser(null))
-    setMenuVisible(false)
-    navigate('/');
+    dispatch(setUser(null));
+    setMenuVisible(false);
+    navigate("/");
+  };
+  const handleAddModalOpen = () => {
+    setModalVisible(true);
+  };
+
+  const handleAddModalClose = () => {
+    setModalVisible(false);
   };
   return (
     <header className="header-container">
@@ -23,9 +32,14 @@ const Header = () => {
           className="home-logo"
         />
       </div>
-      <div className="nav-section">
-        <p className="add-btn">ADD</p>
-      </div>
+      {user && (
+        <div className="nav-section">
+          <p className="add-btn" onClick={handleAddModalOpen}>
+            ADD
+          </p>
+        </div>
+      )}
+
       {user ? (
         <>
           <div
@@ -51,6 +65,7 @@ const Header = () => {
           </Link>
         </div>
       )}
+      <AddModal isOpen={isModalVisible} onClose={handleAddModalClose} />
     </header>
   );
 };
