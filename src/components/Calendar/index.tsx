@@ -35,41 +35,7 @@ const events: TCalendarEvent[] = [
   { start: 405, duration: 30, title: "Push up branch" },
 ];
 
-// vyvesti otsyda
-function calculateOverlaps(events: TCalendarEvent[]) {
-  const overlaps: TCalendarEvent[] = [];
-  for (let i = 0; i < events.length; i++) {
-    let overlapCount = 0;
-
-    for (let j = 0; j < events.length; j++) {
-      if (i === j) continue;
-
-      if (
-        (events[i].start >= events[j].start && events[i].start <= events[j].start + events[j].duration) ||
-        (events[j].start >= events[i].start && events[j].start <= events[i].start + events[i].duration)
-      ) {
-        overlapCount++;
-      }
-    }
-
-    overlaps.push({ ...events[i], overlap: !!overlapCount });
-  }
-
-  return overlaps;
-}
-
-
 const Calendar = () => {
-
- 
-  const [eventsList, setEventsList] = useState<TCalendarEvent[]>([]);
-
-  useEffect(() => {
-    const arr = calculateOverlaps(events);
-    setEventsList(arr);
-  }, []);
-
-  
   return (
     <div className="calendar">
       <div className="time-slots">
@@ -81,7 +47,7 @@ const Calendar = () => {
       </div>
 
       <div className="events">
-        {eventsList.map((event, index) => (
+        {events.map((event, index) => (
           <CalendarEvent event={event} key={index}/>
         ))}
       </div>

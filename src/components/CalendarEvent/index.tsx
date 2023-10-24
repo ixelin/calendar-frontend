@@ -24,7 +24,7 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({ event }) => {
     return `${hoursStr}:${minutesStr}`;
   }
   return (
-    <div className={cx('event', event.overlap && 'overlap')} style={{ gridRow: `${gridStart} / span ${gridSpan}` }}>
+    <div className="event" style={{ gridRow: `${gridStart} / span ${gridSpan}` }}>
       {/* {isShort ? '' : event.title} */}
       {minutesToHHMM(event.start)} - {minutesToHHMM(event.start + event.duration)}
     </div>
