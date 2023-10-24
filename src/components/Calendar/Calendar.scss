@@ -2,7 +2,7 @@
   position: relative;
   margin: 20px auto;
   height: 150vh;
-  width: 270px; //? 200px of event width + 70 from the left
+  width: 250px; //? 200px of event width + 70 from the left
   .time-slots {
     position: relative;
     height: 100%;
@@ -30,7 +30,7 @@
     grid-template-rows: repeat(540, 1fr);  //! 540 slots of 1 minute each
     position: absolute;
     top: 0;
-    left: 70px;
+    left: 50px;
     height: 100%;
     width: 200px;
 }
