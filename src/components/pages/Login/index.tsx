@@ -5,8 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styles from "./Login.module.scss";
 import { Navigate, useNavigate } from "react-router";
-import { useAppDispatch, useAppSelector} from "../../app/hooks";
-import { setUser } from "../../features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { loginUser, setUser } from "../../../features/user/userSlice";
 
 interface LoginForm {
   username: string;
@@ -17,17 +17,17 @@ const schema = yup.object().shape({
   username: yup
     .string()
     .matches(/^[A-Za-z0-9_]+$/, "Only latin letters, numbers, and _ allowed")
-    .min(4, "Username must be at least 4 characters long")
+    .min(3, "Username must be at least 3 characters long")
     .required("Username is required"),
   password: yup
     .string()
-    .min(8, "Password must be at least 8 characters long")
+    .min(6, "Password must be at least 6 characters long")
     .required("Password is required"),
 });
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const {user} = useAppSelector(state => state.user)
+  const { user } = useAppSelector((state) => state.user);
 
   function handleRegister() {
     navigate("/register");
@@ -41,7 +41,7 @@ const Login = () => {
   });
 
   const onSubmit = (data: LoginForm) => {
-    dispatch(setUser({ ...data, calendar: 0, id:0 }));
+    dispatch(loginUser(data));
   };
   if (user) {
     return <Navigate to="/" />;

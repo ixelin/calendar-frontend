@@ -1,12 +1,11 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-// @ts-ignore
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import styles from "./Register.module.scss";
 import { Navigate, useNavigate } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setUser } from "../../features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { loginUser, registerUser } from "../../../features/user/userSlice";
 
 interface RegisterForm {
   username: string;
@@ -17,11 +16,11 @@ const schema = yup.object().shape({
   username: yup
     .string()
     .matches(/^[A-Za-z0-9_]+$/, "Only latin letters, numbers, and _ allowed")
-    .min(4, "Username must be at least 4 characters long")
+    .min(3, "Username must be at least 3 characters long")
     .required("Username is required"),
   password: yup
     .string()
-    .min(8, "Password must be at least 8 characters long")
+    .min(6, "Password must be at least 6 characters long")
     .required("Password is required"),
 });
 const Register = () => {
@@ -39,8 +38,10 @@ const Register = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: RegisterForm) => {
-    dispatch(setUser({ ...data, calendar: 0, id:0 }));
+  const onSubmit = async (data: RegisterForm) => {
+    await dispatch(registerUser(data));
+    await dispatch(loginUser(data));
+
   };
   if (user) {
     return <Navigate to="/" />;

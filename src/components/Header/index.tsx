@@ -1,20 +1,28 @@
 import React, { useState } from "react";
-import "./Header.scss"; // Importing styles
+import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { setUser } from "../features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { setUser } from "../../features/user/userSlice";
 import AddModal from "./AddModal";
-
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+import { setCalendar } from "../../features/Calendar/calendarSlice";
 const Header = () => {
   const navigate = useNavigate();
-  const { user } = useAppSelector((state) => state.user);
+  const { user, loading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const handleLogout = () => {
+    localStorage.removeItem("token");
     dispatch(setUser(null));
+    dispatch(setCalendar([]));
     setMenuVisible(false);
     navigate("/");
+  };
+  const handleDownload = () => {
+    console.log(user);
+    setMenuVisible(false);
   };
   const handleAddModalOpen = () => {
     setModalVisible(true);
@@ -23,7 +31,9 @@ const Header = () => {
   const handleAddModalClose = () => {
     setModalVisible(false);
   };
+
   return (
+    <>
     <header className="header-container">
       <div className="logo-section" onClick={() => navigate("/")}>
         <img
@@ -54,6 +64,7 @@ const Header = () => {
           </div>
           {isMenuVisible && (
             <div className="user-dropdown-menu">
+              <p onClick={handleDownload}>Download calendar</p>
               <p onClick={handleLogout}>Logout</p>
             </div>
           )}
@@ -67,6 +78,10 @@ const Header = () => {
       )}
       <AddModal isOpen={isModalVisible} onClose={handleAddModalClose} />
     </header>
+      <Box sx={{ width: "100%" }}>
+        {loading && <LinearProgress />}
+      </Box>
+    </>
   );
 };
 

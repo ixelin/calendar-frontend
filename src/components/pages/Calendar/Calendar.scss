@@ -28,11 +28,13 @@
   .events {
     display: grid;
     grid-template-rows: repeat(540, 1fr);  //! 540 slots of 1 minute each
+    grid-template-columns: 1fr 1fr;
     position: absolute;
     top: 0;
     left: 50px;
     height: 100%;
     width: 200px;
+    
 }
 
 }

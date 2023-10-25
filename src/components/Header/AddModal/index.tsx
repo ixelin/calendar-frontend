@@ -1,26 +1,22 @@
 import React, { useState, FormEvent } from "react";
+import { Button, TextField, Container, Dialog, Snackbar } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
-  Button,
-  TextField,
-  Container,
-  Dialog,
-  Snackbar,
-  duration,
-} from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { createCalendarEvent } from "../../features/Calendar/calendarSlice";
+  createCalendarEvent,
+  getCalendarEvents,
+} from "../../../features/Calendar/calendarSlice";
 
 type AddModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
-
+const initialValue = {
+  title: "",
+  start: "",
+  duration: "",
+};
 const AddModal: React.FC<AddModalProps> = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    start: "",
-    duration: "",
-  });
+  const [formData, setFormData] = useState(initialValue);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -35,22 +31,26 @@ const AddModal: React.FC<AddModalProps> = ({ isOpen, onClose }) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (+formData.start + +formData.duration > 540) {
       setIsSnackbarOpen(true);
       return;
     }
-    console.log(formData);
-    dispatch(
-      createCalendarEvent({
-        title: formData.title,
-        userId: user!.id,
-        id: Date.now(),
-        start: +formData.start,
-        duration: +formData.duration,
-      })
-    );
+    if (user) {
+      await dispatch(
+        createCalendarEvent({
+          title: formData.title,
+          userId: user.id,
+          start: +formData.start,
+          duration: +formData.duration,
+          overlaps: false,
+        })
+      );
+      console.log(user);
+      dispatch(getCalendarEvents());
+    }
+    setFormData(initialValue);
     onClose();
   };
 

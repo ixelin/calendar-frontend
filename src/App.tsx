@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Calendar from "./components/pages/Calendar";
 import Header from "./components/Header";
@@ -6,8 +6,19 @@ import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import NotFoundPage from "./components/pages/NotFoundPage";
 import SelectEvent from "./components/pages/SelectEvent";
+import { useAppDispatch } from "./app/hooks";
+import { getUser } from "./features/user/userSlice";
 
 const App = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      dispatch(getUser());
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       <Header />

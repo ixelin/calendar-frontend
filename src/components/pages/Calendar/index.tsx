@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo } from "react";
 import "./Calendar.scss";
 import CalendarEvent from "./CalendarEvent";
-import { useAppSelector } from "../../app/hooks";
-import { checkOverlaps } from "../../helpers/checkOverlaps";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { checkOverlaps } from "../../../helpers/checkOverlaps";
+import { getCalendarEvents } from "../../../features/Calendar/calendarSlice";
 const timeLabels = [
   "8:00",
   "8:30",
@@ -26,12 +27,14 @@ const timeLabels = [
 ];
 const Calendar = () => {
   const { calendar } = useAppSelector((state) => state.calendar);
-
-
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getCalendarEvents());
+  }, []);
   const list = useMemo(() => {
-    return checkOverlaps(calendar);
+    if (calendar) return checkOverlaps(calendar);
   }, [calendar]);
-  
+
   return (
     <div className="calendar">
       <div className="time-slots">
@@ -46,8 +49,8 @@ const Calendar = () => {
       </div>
 
       <div className="events">
-        {list.map((event, index) => (
-          <CalendarEvent event={event} key={index} />
+        {list?.map((event, index) => (
+          <CalendarEvent event={event} key={event._id} />
         ))}
       </div>
     </div>
