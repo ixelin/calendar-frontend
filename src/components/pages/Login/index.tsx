@@ -6,7 +6,7 @@ import * as yup from "yup";
 import styles from "./Login.module.scss";
 import { Navigate, useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { loginUser, setUser } from "../../../features/user/userSlice";
+import { loginUser } from "../../../features/user/userSlice";
 
 interface LoginForm {
   username: string;

@@ -13,7 +13,9 @@ export const getCalendarEvents = createAsyncThunk("/events", async () => {
 
 export const createCalendarEvent = createAsyncThunk(
   "/event",
-  async (event: Omit<TCalendarEvent, "_id" | "userId">): Promise<TCalendarEvent> => {
+  async (
+    event: Omit<TCalendarEvent, "_id" | "userId">
+  ): Promise<TCalendarEvent> => {
     const res = await axiosRequest.post(API.HANDLE_EVENT, event);
     return res.data;
   }
@@ -46,7 +48,7 @@ const calendarSlice = createSlice({
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCalendarEvents.pending, (state) => {

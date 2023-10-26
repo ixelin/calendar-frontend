@@ -9,7 +9,7 @@ import SelectEvent from "./components/pages/SelectEvent";
 import { useAppDispatch } from "./app/hooks";
 import { getUser } from "./features/user/userSlice";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   const dispatch = useAppDispatch();
 
@@ -23,7 +23,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-    <ToastContainer/>
+      <ToastContainer />
       <Header />
       <Routes>
         <Route path="/" element={<Calendar />} />

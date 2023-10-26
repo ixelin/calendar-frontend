@@ -25,8 +25,8 @@ const schema = yup.object().shape({
 });
 const Register = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch()
-  const {user} = useAppSelector(state => state.user)
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
   function handleLogin() {
     navigate("/login");
   }
@@ -40,11 +40,9 @@ const Register = () => {
 
   const onSubmit = async (data: RegisterForm) => {
     const res = await dispatch(registerUser(data));
-    if(res.payload) {
+    if (res.payload) {
       await dispatch(loginUser(data));
     }
-    
-
   };
   if (user) {
     return <Navigate to="/" />;
