@@ -41,13 +41,11 @@ const AddModal: React.FC<AddModalProps> = ({ isOpen, onClose }) => {
       await dispatch(
         createCalendarEvent({
           title: formData.title,
-          userId: user.id,
           start: +formData.start,
           duration: +formData.duration,
           overlaps: false,
         })
       );
-      console.log(user);
       dispatch(getCalendarEvents());
     }
     setFormData(initialValue);

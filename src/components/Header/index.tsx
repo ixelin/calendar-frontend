@@ -7,9 +7,12 @@ import AddModal from "./AddModal";
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { setCalendar } from "../../features/Calendar/calendarSlice";
+import axiosRequest from "../../api/axios";
+import { API } from "../../enums/api";
 const Header = () => {
   const navigate = useNavigate();
-  const { user, loading } = useAppSelector((state) => state.user);
+  const { user, loading : loadingUser } = useAppSelector((state) => state.user);
+  const { loading : loadingCalendar } = useAppSelector((state) => state.calendar);
   const dispatch = useAppDispatch();
   const [isMenuVisible, setMenuVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
@@ -20,8 +23,16 @@ const Header = () => {
     setMenuVisible(false);
     navigate("/");
   };
-  const handleDownload = () => {
-    console.log(user);
+  const handleDownload = async () => {
+    const res = await axiosRequest(API.JSON);
+    const jsonString = JSON.stringify(res.data, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'data.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
     setMenuVisible(false);
   };
   const handleAddModalOpen = () => {
@@ -79,7 +90,7 @@ const Header = () => {
       <AddModal isOpen={isModalVisible} onClose={handleAddModalClose} />
     </header>
       <Box sx={{ width: "100%" }}>
-        {loading && <LinearProgress />}
+        {(loadingCalendar || loadingUser) && <LinearProgress />}
       </Box>
     </>
   );

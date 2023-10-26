@@ -8,19 +8,22 @@ import NotFoundPage from "./components/pages/NotFoundPage";
 import SelectEvent from "./components/pages/SelectEvent";
 import { useAppDispatch } from "./app/hooks";
 import { getUser } from "./features/user/userSlice";
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token");
     if (token) {
       dispatch(getUser());
     }
+    // eslint-disable-next-line
   }, []);
 
   return (
     <BrowserRouter>
+    <ToastContainer/>
       <Header />
       <Routes>
         <Route path="/" element={<Calendar />} />

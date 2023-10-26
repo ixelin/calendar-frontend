@@ -39,8 +39,11 @@ const Register = () => {
   });
 
   const onSubmit = async (data: RegisterForm) => {
-    await dispatch(registerUser(data));
-    await dispatch(loginUser(data));
+    const res = await dispatch(registerUser(data));
+    if(res.payload) {
+      await dispatch(loginUser(data));
+    }
+    
 
   };
   if (user) {

@@ -30,6 +30,7 @@ const Calendar = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getCalendarEvents());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const list = useMemo(() => {
     if (calendar) return checkOverlaps(calendar);

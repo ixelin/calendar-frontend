@@ -5,4 +5,5 @@ export type TCalendarEvent = {
   userId: number;
   _id: string;
   overlaps?: boolean;
+  __v?: number;
 };

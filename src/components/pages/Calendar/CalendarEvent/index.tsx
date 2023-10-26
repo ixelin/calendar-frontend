@@ -1,6 +1,7 @@
 import React from "react";
 import { TCalendarEvent } from "../../../../types/CalendarEvent";
 import "./CalendarEvent.scss";
+// eslint-disable-next-line
 import { minutesToHHMM } from "../../../../helpers/minutesToHHMM";
 import { useNavigate } from "react-router";
 interface CalendarEventProps {

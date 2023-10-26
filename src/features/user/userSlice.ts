@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TUser } from "../../types/User";
-import axios from "axios";
 import { API } from "../../enums/api";
 import axiosRequest from "../../api/axios";
 interface TInitialState {
@@ -14,13 +13,12 @@ const initialState: TInitialState = {
 };
 
 export const registerUser = createAsyncThunk('/register', async (data: {username:string, password:string}) => {
-  const res = await axios.post(API.REGISTER, {username: data.username, password: data.password });
+  const res = await axiosRequest.post(API.REGISTER, {username: data.username, password: data.password });
   return res.data;
 })
 
 export const loginUser = createAsyncThunk('/login', async (data: {username:string, password:string}) => {
-  console.log('loginUser dispatched')
-  const res = await axios.post(API.LOGIN, {username: data.username, password: data.password });
+  const res = await axiosRequest.post(API.LOGIN, {username: data.username, password: data.password });
   localStorage.setItem('token', `Bearer ${res.data.token}`);
   return res.data;
 })
@@ -55,9 +53,8 @@ const userSlice = createSlice({
       state.loading = false;
       state.user = data.payload.data;
     })
-    builder.addCase(loginUser.rejected, (state, data) => {
+    builder.addCase(loginUser.rejected, (state) => {
       state.loading = false;
-      console.log(data.error);
     })
     builder.addCase(getUser.pending, (state) => {
       state.loading = true;
@@ -66,9 +63,8 @@ const userSlice = createSlice({
       state.loading = false;
       state.user = data.payload;
     })
-    builder.addCase(getUser.rejected, (state, data) => {
+    builder.addCase(getUser.rejected, (state) => {
       state.loading = false;
-      console.log(data.error);
     })
   }
 });

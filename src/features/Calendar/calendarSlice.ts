@@ -13,10 +13,8 @@ export const getCalendarEvents = createAsyncThunk("/events", async () => {
 
 export const createCalendarEvent = createAsyncThunk(
   "/event",
-  async (event: Omit<TCalendarEvent, "_id">): Promise<TCalendarEvent> => {
+  async (event: Omit<TCalendarEvent, "_id" | "userId">): Promise<TCalendarEvent> => {
     const res = await axiosRequest.post(API.HANDLE_EVENT, event);
-    console.log(res);
-    
     return res.data;
   }
 );
@@ -46,6 +44,9 @@ const calendarSlice = createSlice({
     setCalendar: (state, action: PayloadAction<TCalendarEvent[]>) => {
       state.calendar = action.payload;
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(getCalendarEvents.pending, (state) => {
@@ -55,9 +56,8 @@ const calendarSlice = createSlice({
       state.loading = false;
       state.calendar = action.payload;
     });
-    builder.addCase(getCalendarEvents.rejected, (state, action) => {
+    builder.addCase(getCalendarEvents.rejected, (state) => {
       state.loading = false;
-      console.log(action.error);
     });
     builder.addCase(createCalendarEvent.pending, (state) => {
       state.loading = true;
@@ -66,9 +66,8 @@ const calendarSlice = createSlice({
       state.loading = false;
       state.calendar.push(action.payload);
     });
-    builder.addCase(createCalendarEvent.rejected, (state, action) => {
+    builder.addCase(createCalendarEvent.rejected, (state) => {
       state.loading = false;
-      console.log(action.error);
     });
     builder.addCase(deleteCalendarEvent.pending, (state) => {
       state.loading = true;
@@ -83,5 +82,5 @@ const calendarSlice = createSlice({
   },
 });
 
-export const { setCalendar } = calendarSlice.actions;
+export const { setCalendar, setLoading } = calendarSlice.actions;
 export default calendarSlice.reducer;
